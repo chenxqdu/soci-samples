@@ -1,0 +1,79 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: torchserve-cpu-soci
+spec:
+  restartPolicy: OnFailure
+  containers:
+  - name: ptorchserve-cpu-soci
+    image: "956045422469.dkr.ecr.us-west-2.amazonaws.com/test-ecr-soci:torchserve-cpu"
+    ports:
+    - name: ts
+      containerPort: 8080
+    - name: ts-management
+      containerPort: 8081
+    imagePullPolicy: IfNotPresent
+    resources:
+      limits:
+        cpu: 4
+        memory: 4Gi
+        # nvidia.com/gpu: 1
+      requests:
+        cpu: "1"
+        memory: 1Gi
+  nodeName: ip-172-31-9-162.us-west-2.compute.internal
+
+--- 
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: torchserve-cpu
+spec:
+  restartPolicy: OnFailure
+  containers:
+  - name: torchserve-cpu
+    image: "956045422469.dkr.ecr.us-west-2.amazonaws.com/test-ecr:torchserve-cpu"
+    ports:
+    - name: ts
+      containerPort: 8080
+    - name: ts-management
+      containerPort: 8081
+    imagePullPolicy: IfNotPresent
+    resources:
+      limits:
+        cpu: 4
+        memory: 4Gi
+        # nvidia.com/gpu: 1
+      requests:
+        cpu: "1"
+        memory: 1Gi
+  nodeName: ip-172-31-43-21.us-west-2.compute.internal
+  
+# --- 
+ 
+# apiVersion: v1
+# kind: Pod
+# metadata:
+#   name: torchserve-cpu-esgz
+# spec:
+#   restartPolicy: OnFailure
+#   containers:
+#   - name: torchserve-cpu-esgz
+#     image: "956045422469.dkr.ecr.us-west-2.amazonaws.com/test-ecr:torchserve-cpu-esgz"
+#     ports:
+#     - name: ts
+#       containerPort: 8080
+#     - name: ts-management
+#       containerPort: 8081
+#     imagePullPolicy: IfNotPresent
+#     resources:
+#       limits:
+#         cpu: 4
+#         memory: 4Gi
+#         # nvidia.com/gpu: 1
+#       requests:
+#         cpu: "1"
+#         memory: 1Gi
+#   nodeName: ip-172-31-33-128.us-west-2.compute.internal
+
